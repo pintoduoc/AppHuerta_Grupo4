@@ -21,7 +21,7 @@ class MainActivity : ComponentActivity() {
             AppHuerto_Grupo4Theme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     Greeting(
-                        name = "Android",
+                        name = "Ignacio Ruiz, Nicolas Alvarado, Oscar Sepulveda y Benjamín Pinto",
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
@@ -33,7 +33,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
     Text(
-        text = "Hello $name!",
+        text = "Hola $name!",
         modifier = modifier
     )
 }
