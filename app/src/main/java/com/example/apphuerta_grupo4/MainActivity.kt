@@ -11,6 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.apphuerta_grupo4.ui.screens.PaginaInicioCompacta
 import com.example.apphuerta_grupo4.ui.theme.AppHuerta_Grupo4Theme
 
 class MainActivity : ComponentActivity() {
@@ -19,29 +20,16 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             AppHuerta_Grupo4Theme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
+                PaginaInicioCompacta()
             }
         }
     }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
 }
 
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
     AppHuerta_Grupo4Theme {
-        Greeting("Android")
+        PaginaInicioCompacta()
     }
 }
