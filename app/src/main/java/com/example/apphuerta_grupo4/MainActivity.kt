@@ -1,5 +1,6 @@
 package com.example.apphuerta_grupo4
 
+import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -27,9 +28,13 @@ import kotlinx.coroutines.flow.collectLatest
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val sharedPreferences = getSharedPreferences("app_preferences", Context.MODE_PRIVATE)
+        val isDarkMode = sharedPreferences.getBoolean("dark_mode", false)
+
         enableEdgeToEdge()
         setContent {
-            AppHuerta_Grupo4Theme {
+            AppHuerta_Grupo4Theme (darkTheme = isDarkMode) {
                 val viewModel: MainViewModel = viewModel()
                 val navController = rememberNavController()
 
