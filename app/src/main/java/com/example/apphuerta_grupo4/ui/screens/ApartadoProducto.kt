@@ -1,14 +1,15 @@
 package com.example.apphuerta_grupo4.ui.screens
 
-package com.example.apphuerta_grupo4.ui.screens
-
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -16,7 +17,13 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import com.example.apphuerta_grupo4.R
+import com.example.apphuerta_grupo4.navigation.Screen
+import com.example.apphuerta_grupo4.viewmodels.MainViewModel
+import com.example.apphuerta_grupo4.viewmodels.UsuarioViewModel
+import kotlinx.coroutines.launch
 
 // -------------------------------
 // 1. Modelo de datos
@@ -43,31 +50,68 @@ val listaProductos = listOf(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ApartadoProducto(
-    onVolver: () -> Unit
+    viewModel: MainViewModel,
+    usuarioViewModel: UsuarioViewModel
 ) {
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { Text("Productos del Huerto") },
-                navigationIcon = {
-                    IconButton(onClick = onVolver) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.baseline_arrow_back_24),
-                            contentDescription = "Volver"
-                        )
+    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+    val scope = rememberCoroutineScope()
+
+    ModalNavigationDrawer(
+        drawerState = drawerState,
+        drawerContent = {
+            ModalDrawerSheet {
+                Text(text = "Menú", modifier = Modifier.padding(5.dp))
+                //Items del Drawer:
+                NavigationDrawerItem(
+                    label = {Text("Inicio")},
+                    selected = true,
+                    onClick = {
+                        scope.launch {drawerState.close()}
+                        viewModel.navigateTo(Screen.Home)
                     }
-                }
-            )
+                )
+                NavigationDrawerItem(
+                    label = {Text("Configuracion")},
+                    selected = false,
+                    onClick = {
+                        scope.launch { drawerState.close() }
+                        viewModel.navigateTo(Screen.Settings)
+                    }
+                )
+                NavigationDrawerItem(
+                    label = {Text("Productos")},
+                    selected = false,
+                    onClick = {
+                        scope.launch { drawerState.close() }
+                        viewModel.navigateTo(Screen.Productos)
+                    }
+                )
+            }
         }
-    ) { padding ->
-        LazyColumn(
-            modifier = Modifier
-                .padding(padding)
-                .padding(16.dp)
-        ) {
-            items(listaProductos) { producto ->
-                TarjetaProducto(producto)
-                Spacer(modifier = Modifier.height(12.dp))
+    ) {
+        Scaffold(
+            topBar = {
+                TopAppBar(
+                    title = { Text(text = "Tienda Huerto Hogar") },
+                    navigationIcon = {
+                        IconButton(onClick = {
+                            scope.launch { drawerState.open() }
+                        }) {
+                            Icon(imageVector = Icons.Default.Menu, contentDescription = "Menú")
+                        }
+                    }
+                )
+            }
+        ) { padding ->
+            LazyColumn(
+                modifier = Modifier
+                    .padding(padding)
+                    .padding(16.dp)
+            ) {
+                items(listaProductos) { producto ->
+                    TarjetaProducto(producto)
+                    Spacer(modifier = Modifier.height(12.dp))
+                }
             }
         }
     }

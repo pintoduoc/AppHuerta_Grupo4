@@ -5,10 +5,7 @@ sealed class Screen(val route: String) {
     data object Settings : Screen("pagina_configuracion")
     data object Productos : Screen("apartado_productos")
 
+    data object Registro : Screen("pagina_registro")
 
-    data class Detail(val itemId: String) : Screen("detalle_producto/{itemId}") {
-        fun buildRoute() : String {
-            return route.replace("{itemId}", itemId)
-        }
-    }
+    data object ResumenCuenta : Screen("resumen_cuenta")
 }

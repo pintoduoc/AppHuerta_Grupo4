@@ -36,13 +36,14 @@ import androidx.navigation.NavController
 import com.example.apphuerta_grupo4.R
 import com.example.apphuerta_grupo4.navigation.Screen
 import com.example.apphuerta_grupo4.viewmodels.MainViewModel
+import com.example.apphuerta_grupo4.viewmodels.UsuarioViewModel
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PaginaInicio(
-    navController: NavController,
-    viewModel: MainViewModel = viewModel()
+    viewModel: MainViewModel,
+    usuarioViewModel: UsuarioViewModel
 ) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
@@ -67,6 +68,31 @@ fun PaginaInicio(
                     onClick = {
                         scope.launch { drawerState.close() }
                         viewModel.navigateTo(Screen.Settings)
+                    }
+                )
+                NavigationDrawerItem(
+                    label = {Text("Productos")},
+                    selected = false,
+                    onClick = {
+                        scope.launch { drawerState.close() }
+                        viewModel.navigateTo(Screen.Productos)
+                    }
+                )
+
+                NavigationDrawerItem(
+                    label = {Text("Registro")},
+                    selected = false,
+                    onClick = {
+                        scope.launch {drawerState.close()}
+                        viewModel.navigateTo(Screen.Registro)
+                    }
+                )
+                NavigationDrawerItem(
+                    label = {Text("Resumen Cuenta")},
+                    selected = false,
+                    onClick = {
+                        scope.launch { drawerState.close() }
+                        viewModel.navigateTo(Screen.ResumenCuenta)
                     }
                 )
             }
@@ -128,10 +154,4 @@ fun PaginaInicio(
         }
     }
 
-}
-
-@Preview(name = "Compact", widthDp = 360, heightDp = 800)
-@Composable
-fun PreviewCompact() {
-    PaginaInicio(navController = NavController(LocalContext.current))
 }

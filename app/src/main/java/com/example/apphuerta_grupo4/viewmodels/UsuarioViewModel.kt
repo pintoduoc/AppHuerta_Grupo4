@@ -1,7 +1,10 @@
-import androix.lifecycle.Viewmodel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.stateFlow
+package com.example.apphuerta_grupo4.viewmodels
+
+import androidx.lifecycle.ViewModel
 import com.example.apphuerta_grupo4.model.UsuarioErrores
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.update
 import com.example.apphuerta_grupo4.model.UsuarioUiState
 
 
@@ -9,14 +12,14 @@ import com.example.apphuerta_grupo4.model.UsuarioUiState
 class UsuarioViewModel : ViewModel() {
     private val _estado = MutableStateFlow(UsuarioUiState())
 
-    val estado: StateFlow<UsuarioUiState> _estado
+    val estado: StateFlow<UsuarioUiState> = _estado
 
-    fun onNombresChange(Valor: String) {
+    fun onNombresChange(valor: String) {
         _estado.update {it.copy(nombres = valor, errores = it.errores.copy(nombres = null))}
     }
 
     fun onApellidosChange(valor: String) {
-        _estado.update { it.copy(apellidos = valor, errores = it.errores.copy(apelidos = null)) }
+        _estado.update { it.copy(apellidos = valor, errores = it.errores.copy(apellidos = null)) }
 
     }
 
@@ -33,8 +36,30 @@ class UsuarioViewModel : ViewModel() {
         _estado.update { it.copy(direccion = valor, errores = it.errores.copy(direccion = null)) }
     }
 
-    fun onAceptarTerminosChange(valor: boolean) {
-        _estado.update { it.copy(onAceptarTerminos = valor }
+    fun onAceptarTerminosChange(valor: Boolean) {
+        _estado.update { it.copy(aceptaTerminos = valor) }
+    }
+
+    fun validarFormulario(): Boolean {
+        val estadoActual = _estado.value
+        val errores = UsuarioErrores(
+            nombres = if (estadoActual.nombres.isBlank()) "Campo obligatorio" else null,
+            apellidos = if (estadoActual.apellidos.isBlank()) "Campo obligatorio" else null,
+            correo = if (!estadoActual.correo.contains("@")) "Correo Invalido" else null,
+            clave = if (estadoActual.clave.length < 6) "Debe contener al menos 6 caracteres" else null,
+            direccion = if (estadoActual.direccion.isBlank()) "Campo obligatorio" else null
+            )
+        val hayErrores = listOfNotNull(
+            errores.nombres,
+            errores.apellidos,
+            errores.correo,
+            errores.clave,
+            errores.direccion
+        ).isNotEmpty()
+
+        _estado.update { it.copy(errores = errores) }
+
+        return !hayErrores
     }
 
 }
