@@ -93,10 +93,18 @@ fun PaginaConfiguracion(
 
                 NavigationDrawerItem(
                     label = {Text("Registro")},
-                    selected = true,
+                    selected = false,
                     onClick = {
                         scope.launch {drawerState.close()}
                         viewModel.navigateTo(Screen.Registro)
+                    }
+                )
+                NavigationDrawerItem(
+                    label = {Text("Resumen Cuenta")},
+                    selected = false,
+                    onClick = {
+                        scope.launch { drawerState.close() }
+                        viewModel.navigateTo(Screen.ResumenCuenta)
                     }
                 )
             }

@@ -64,7 +64,7 @@ fun ApartadoProducto(
                 //Items del Drawer:
                 NavigationDrawerItem(
                     label = {Text("Inicio")},
-                    selected = true,
+                    selected = false,
                     onClick = {
                         scope.launch {drawerState.close()}
                         viewModel.navigateTo(Screen.Home)
@@ -80,10 +80,26 @@ fun ApartadoProducto(
                 )
                 NavigationDrawerItem(
                     label = {Text("Productos")},
-                    selected = false,
+                    selected = true,
                     onClick = {
                         scope.launch { drawerState.close() }
                         viewModel.navigateTo(Screen.Productos)
+                    }
+                )
+                NavigationDrawerItem(
+                    label = {Text("Registro")},
+                    selected = false,
+                    onClick = {
+                        scope.launch {drawerState.close()}
+                        viewModel.navigateTo(Screen.Registro)
+                    }
+                )
+                NavigationDrawerItem(
+                    label = {Text("Resumen Cuenta")},
+                    selected = false,
+                    onClick = {
+                        scope.launch { drawerState.close() }
+                        viewModel.navigateTo(Screen.ResumenCuenta)
                     }
                 )
             }
