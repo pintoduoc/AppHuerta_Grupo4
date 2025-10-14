@@ -59,7 +59,7 @@ fun PaginaRegistro(
                 //Items del Drawer:
                 NavigationDrawerItem(
                     label = { Text("Inicio") },
-                    selected = true,
+                    selected = false,
                     onClick = {
                         scope.launch { drawerState.close() }
                         viewModel.navigateTo(Screen.Home)
@@ -88,6 +88,14 @@ fun PaginaRegistro(
                     onClick = {
                         scope.launch { drawerState.close() }
                         viewModel.navigateTo(Screen.Registro)
+                    }
+                )
+                NavigationDrawerItem(
+                    label = {Text("Resumen Cuenta")},
+                    selected = false,
+                    onClick = {
+                        scope.launch { drawerState.close() }
+                        viewModel.navigateTo(Screen.ResumenCuenta)
                     }
                 )
             }

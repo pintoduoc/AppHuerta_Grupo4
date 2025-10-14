@@ -134,7 +134,7 @@ fun PaginaInicio(
                 )
 
                 Button(
-                    onClick = { /* Aca debería mandar a la pantalla de registro */ },
+                    onClick = { viewModel.navigateTo(Screen.Registro) },
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(50.dp)
