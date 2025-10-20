@@ -1,3 +1,4 @@
+
 package com.example.apphuerta_grupo4.data
 
 import androidx.room.Dao
@@ -10,6 +11,9 @@ import kotlinx.coroutines.flow.Flow
 interface ProductoDao {
     @Query("SELECT * FROM productos")
     fun getAll(): Flow<List<Producto>>
+
+    @Query("SELECT * FROM productos WHERE nombre = :nombre")
+    fun getByNombre(nombre: String): Flow<Producto>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(productos: List<Producto>)

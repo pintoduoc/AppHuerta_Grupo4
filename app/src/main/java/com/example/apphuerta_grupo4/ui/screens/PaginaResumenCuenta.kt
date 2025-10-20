@@ -49,6 +49,7 @@ fun PaginaResumenCuenta(
         Text(
             text = "No hay datos disponibles, intenta crear una cuenta o iniciar sesión",
             style = MaterialTheme.typography.bodyLarge,
+            color = MaterialTheme.colorScheme.error,
             modifier = Modifier.align(Alignment.CenterHorizontally) .padding(innerPadding)
         )
     }

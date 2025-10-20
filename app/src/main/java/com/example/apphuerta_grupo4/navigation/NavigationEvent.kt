@@ -8,6 +8,8 @@ sealed class NavigationEvent {
         val singleTop : Boolean = false
     ) : NavigationEvent()
 
+    data class NavigateToProductDetail(val productoNombre: String) : NavigationEvent()
+
     object PopBackStack : NavigationEvent()
     object NavigateUp : NavigationEvent()
 }

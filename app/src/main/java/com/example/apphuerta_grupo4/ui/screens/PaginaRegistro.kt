@@ -126,7 +126,7 @@ fun PaginaRegistro(
                     Text("Registrar")
                 }
             }else {
-                Text(text = "Ya has sido registrado", style = MaterialTheme.typography.bodyLarge, modifier = Modifier.align(Alignment.CenterHorizontally) .padding(innerPadding))
+                Text(text = "Ya has sido registrado", style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.error, modifier = Modifier.align(Alignment.CenterHorizontally) .padding(innerPadding))
             }
         }
     }

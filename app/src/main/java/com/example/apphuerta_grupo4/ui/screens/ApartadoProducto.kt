@@ -31,6 +31,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.apphuerta_grupo4.data.Producto
+import com.example.apphuerta_grupo4.navigation.NavigationEvent
 import com.example.apphuerta_grupo4.navigation.Screen
 import com.example.apphuerta_grupo4.ui.shared.AppScaffold
 import com.example.apphuerta_grupo4.viewmodels.MainViewModel
@@ -58,12 +59,16 @@ fun ApartadoProducto(
                     .padding(16.dp)
             ) {
                 items(productos) { producto ->
-                    TarjetaProducto(producto)
+                    TarjetaProducto(producto = producto, onProductClick = {
+                        mainViewModel.onNavigationEvent(
+                            NavigationEvent.NavigateToProductDetail(producto.nombre)
+                        )
+                    })
                     Spacer(modifier = Modifier.height(12.dp))
                 }
             }
         }
-    }else{
+    } else {
         AppScaffold(
             viewModel = mainViewModel,
             currentScreen = Screen.Productos
@@ -79,6 +84,7 @@ fun ApartadoProducto(
                 Text(
                     text = "Para ver los productos debes iniciar sesión o registrarte",
                     style = MaterialTheme.typography.bodyLarge,
+                    color = MaterialTheme.colorScheme.error,
                     modifier = Modifier.align(Alignment.CenterHorizontally)
                 )
             }
@@ -87,7 +93,7 @@ fun ApartadoProducto(
 }
 
 @Composable
-fun TarjetaProducto(producto: Producto) {
+fun TarjetaProducto(producto: Producto, onProductClick: (Producto) -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth(),
@@ -124,7 +130,7 @@ fun TarjetaProducto(producto: Producto) {
                     color = MaterialTheme.colorScheme.primary
                 )
                 Spacer(modifier = Modifier.height(6.dp))
-                Button(onClick = { /* Aquí podrías agregar detalles o carrito */ }) {
+                Button(onClick = { onProductClick(producto) }) {
                     Text("Ver más")
                 }
             }
