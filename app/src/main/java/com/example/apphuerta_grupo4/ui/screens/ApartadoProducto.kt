@@ -1,13 +1,26 @@
-
 package com.example.apphuerta_grupo4.ui.screens
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.*
+import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -15,40 +28,23 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.apphuerta_grupo4.R
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.apphuerta_grupo4.data.Producto
 import com.example.apphuerta_grupo4.navigation.Screen
 import com.example.apphuerta_grupo4.ui.shared.AppScaffold
 import com.example.apphuerta_grupo4.viewmodels.MainViewModel
+import com.example.apphuerta_grupo4.viewmodels.ProductoViewModel
 
-// -------------------------------
-// 1. Modelo de datos
-// -------------------------------
-data class Producto(
-    val nombre: String,
-    val descripcion: String,
-    val precio: String,
-    val imagen: Int
-)
-
-// -------------------------------
-// 2. Lista de productos
-// -------------------------------
-val listaProductos = listOf(
-    Producto("Lechuga", "Lechuga fresca y orgánica", "$1.200 / unidad", R.drawable.lechuga),
-    Producto("Tomate", "Tomates maduros del huerto", "$1.800 / kilo", R.drawable.tomate),
-    Producto("Zanahoria", "Zanahorias recién cosechadas", "$1.000 / kilo", R.drawable.zanahoria)
-)
-
-// -------------------------------
-// 3. Pantalla principal
-// -------------------------------
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ApartadoProducto(
-    viewModel: MainViewModel
+    mainViewModel: MainViewModel,
+    productoViewModel: ProductoViewModel = viewModel()
 ) {
+    val productos by productoViewModel.productos.collectAsState()
+
     AppScaffold(
-        viewModel = viewModel,
+        viewModel = mainViewModel,
         currentScreen = Screen.Productos
     ) { padding ->
         LazyColumn(
@@ -56,7 +52,7 @@ fun ApartadoProducto(
                 .padding(padding)
                 .padding(16.dp)
         ) {
-            items(listaProductos) { producto ->
+            items(productos) { producto ->
                 TarjetaProducto(producto)
                 Spacer(modifier = Modifier.height(12.dp))
             }
@@ -64,9 +60,6 @@ fun ApartadoProducto(
     }
 }
 
-// -------------------------------
-// 4. Tarjeta de producto
-// -------------------------------
 @Composable
 fun TarjetaProducto(producto: Producto) {
     Card(

@@ -36,7 +36,7 @@ fun AppNavigation() {
             PaginaConfiguracion(viewModel = mainViewModel, usuarioViewModel = usuarioViewModel)
         }
         composable("apartado_productos") {
-            ApartadoProducto(viewModel = mainViewModel)
+            ApartadoProducto(mainViewModel = mainViewModel)
         }
         composable("pagina_registro") {
             PaginaRegistro(viewModel = mainViewModel, usuarioViewModel = usuarioViewModel)
