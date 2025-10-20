@@ -1,6 +1,7 @@
 package com.example.apphuerta_grupo4.ui.screens
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -34,27 +35,52 @@ import com.example.apphuerta_grupo4.navigation.Screen
 import com.example.apphuerta_grupo4.ui.shared.AppScaffold
 import com.example.apphuerta_grupo4.viewmodels.MainViewModel
 import com.example.apphuerta_grupo4.viewmodels.ProductoViewModel
+import com.example.apphuerta_grupo4.viewmodels.UsuarioViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ApartadoProducto(
     mainViewModel: MainViewModel,
-    productoViewModel: ProductoViewModel = viewModel()
+    productoViewModel: ProductoViewModel = viewModel(),
+    usuarioViewModel: UsuarioViewModel
 ) {
+    val estadoUsuario by usuarioViewModel.estado.collectAsState()
     val productos by productoViewModel.productos.collectAsState()
 
-    AppScaffold(
-        viewModel = mainViewModel,
-        currentScreen = Screen.Productos
-    ) { padding ->
-        LazyColumn(
-            modifier = Modifier
-                .padding(padding)
-                .padding(16.dp)
-        ) {
-            items(productos) { producto ->
-                TarjetaProducto(producto)
-                Spacer(modifier = Modifier.height(12.dp))
+    if (estadoUsuario.nombres.isNotBlank()) {
+        AppScaffold(
+            viewModel = mainViewModel,
+            currentScreen = Screen.Productos
+        ) { padding ->
+            LazyColumn(
+                modifier = Modifier
+                    .padding(padding)
+                    .padding(16.dp)
+            ) {
+                items(productos) { producto ->
+                    TarjetaProducto(producto)
+                    Spacer(modifier = Modifier.height(12.dp))
+                }
+            }
+        }
+    }else{
+        AppScaffold(
+            viewModel = mainViewModel,
+            currentScreen = Screen.Productos
+        ) { padding ->
+            Column(
+                modifier = Modifier
+                    .padding(padding)
+                    .fillMaxWidth()
+                    .padding(16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                Text(
+                    text = "Para ver los productos debes iniciar sesión o registrarte",
+                    style = MaterialTheme.typography.bodyLarge,
+                    modifier = Modifier.align(Alignment.CenterHorizontally)
+                )
             }
         }
     }
