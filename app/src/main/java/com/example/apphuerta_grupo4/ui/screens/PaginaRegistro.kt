@@ -33,7 +33,7 @@ fun PaginaRegistro(
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-            if (estado.nombres.isBlank()) {
+            if (!estado.aceptaTerminos) {
 
                 //Campo Nombres:
                 OutlinedTextField(
@@ -104,26 +104,17 @@ fun PaginaRegistro(
                     },
                     modifier = Modifier.fillMaxWidth()
                 )
-                //Checkbox: Aceptar terminos y condiciones
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Checkbox(
-                        checked = estado.aceptaTerminos,
-                        onCheckedChange = usuarioViewModel::onAceptarTerminosChange
-                    )
-                    Spacer(Modifier.width(8.dp))
-                    Text("Acepto los terminos y condiciones")
-                }
-                //Boton Enviar
+                //Boton Enviar y aceptar terminos
                 Button(
                     onClick = {
-
+                        usuarioViewModel.onAceptarTerminosChange(valor = true)
                         if (usuarioViewModel.validarFormulario()) {
                             viewModel.navigateTo(Screen.ResumenCuenta)
                         }
                     },
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    Text("Registrar")
+                    Text("Aceptar terminos e condiciones y registrar cuenta")
                 }
             }else {
                 Text(text = "Ya has sido registrado", style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.error, modifier = Modifier.align(Alignment.CenterHorizontally) .padding(innerPadding))

@@ -59,15 +59,6 @@ fun PaginaInicio(
             ) {
                 Text("Empezar la Experiencia")
             }
-
-            Button(
-                onClick = { /* Aca debería mandar a la pantalla de Inicio de Sesion */ },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(50.dp)
-            ) {
-                Text("¿Ya tienes una cuenta?")
-            }
         }
     }
 }
