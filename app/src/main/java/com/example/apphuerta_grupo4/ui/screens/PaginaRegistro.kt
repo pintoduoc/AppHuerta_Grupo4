@@ -107,8 +107,8 @@ fun PaginaRegistro(
                 //Boton Enviar y aceptar terminos
                 Button(
                     onClick = {
-                        usuarioViewModel.onAceptarTerminosChange(valor = true)
                         if (usuarioViewModel.validarFormulario()) {
+                            usuarioViewModel.onAceptarTerminosChange(valor = true)
                             viewModel.navigateTo(Screen.ResumenCuenta)
                         }
                     },
