@@ -47,6 +47,8 @@ dependencies {
     implementation( "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.2")
     implementation("androidx.compose.material:material-icons-extended:1.7.8")
     implementation(libs.androidx.core.ktx)
+    // SplashScreen API (needed for installSplashScreen())
+    implementation("androidx.core:core-splashscreen:1.0.1")
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))
