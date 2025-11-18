@@ -14,6 +14,7 @@ import com.example.apphuerta_grupo4.ui.screens.PaginaConfiguracion
 import com.example.apphuerta_grupo4.ui.screens.PaginaInicio
 import com.example.apphuerta_grupo4.ui.screens.PaginaRegistro
 import com.example.apphuerta_grupo4.ui.screens.PaginaResumenCuenta
+import com.example.apphuerta_grupo4.ui.screens.SplashScreen
 import com.example.apphuerta_grupo4.viewmodels.MainViewModel
 import com.example.apphuerta_grupo4.viewmodels.ProductoViewModel
 import com.example.apphuerta_grupo4.viewmodels.UsuarioViewModel
@@ -41,9 +42,12 @@ fun AppNavigation() {
 
     NavHost(
         navController = navController,
-        startDestination = Screen.Home.route
+        startDestination = SPLASH
     ) {
-        composable("pagina_inicio") {
+        composable(SPLASH) {
+            SplashScreen(navController)
+        }
+        composable(INICIO) {
             PaginaInicio(viewModel = mainViewModel, usuarioViewModel = usuarioViewModel)
         }
         composable("pagina_configuracion") {
