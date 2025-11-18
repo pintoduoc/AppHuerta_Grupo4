@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.example.apphuerta_grupo4.R
 import com.example.apphuerta_grupo4.navigation.Screen
 import com.example.apphuerta_grupo4.ui.shared.AppScaffold
 import com.example.apphuerta_grupo4.viewmodels.MainViewModel
@@ -32,9 +33,18 @@ fun DetalleProducto(
     usuarioViewModel: UsuarioViewModel,
     productoNombre: String
 ) {
-    val producto by productoViewModel.getProductoPorNombre(productoNombre).collectAsState(initial = null)
+    val productos by productoViewModel.productos.collectAsState()
+
+    val producto = productos.firstOrNull{ it.nombre == productoNombre }
 
     val estadoUsuario by usuarioViewModel.estado.collectAsState()
+
+    fun imagenIdToDrawableRes(id: Int): Int = when (id) {
+        1 -> R.drawable.lechuga
+        2 -> R.drawable.zanahoria
+        3 -> R.drawable.tomate
+        else -> R.drawable.logo_huertohogar
+    }
 
     if (estadoUsuario.nombres.isNotBlank()) {
         AppScaffold(
@@ -57,7 +67,7 @@ fun DetalleProducto(
                     )
 
                     Image(
-                        painter = painterResource(id = producto.imagen),
+                        painter = painterResource(id = imagenIdToDrawableRes(producto.imagenId)),
                         contentDescription = "Imagen Producto",
                         modifier = Modifier
                             .fillMaxWidth()

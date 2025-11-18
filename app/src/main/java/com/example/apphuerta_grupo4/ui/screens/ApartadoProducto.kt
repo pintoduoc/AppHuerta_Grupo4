@@ -30,7 +30,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.apphuerta_grupo4.data.Producto
+import com.example.apphuerta_grupo4.R
+import com.example.apphuerta_grupo4.data.model.Producto
 import com.example.apphuerta_grupo4.navigation.NavigationEvent
 import com.example.apphuerta_grupo4.navigation.Screen
 import com.example.apphuerta_grupo4.ui.shared.AppScaffold
@@ -59,11 +60,11 @@ fun ApartadoProducto(
                     .padding(16.dp)
             ) {
                 items(productos) { producto ->
-                    TarjetaProducto(producto = producto, onProductClick = {
+                    TarjetaProducto(producto = producto) {
                         mainViewModel.onNavigationEvent(
                             NavigationEvent.NavigateToProductDetail(producto.nombre)
                         )
-                    })
+                    }
                     Spacer(modifier = Modifier.height(12.dp))
                 }
             }
@@ -92,6 +93,12 @@ fun ApartadoProducto(
     }
 }
 
+fun imagenIdToDrawableRes(id: Int): Int = when (id) {
+    1 -> R.drawable.lechuga
+    2 -> R.drawable.zanahoria
+    3 -> R.drawable.tomate
+    else -> R.drawable.logo_huertohogar
+}
 @Composable
 fun TarjetaProducto(producto: Producto, onProductClick: (Producto) -> Unit) {
     Card(
@@ -105,7 +112,7 @@ fun TarjetaProducto(producto: Producto, onProductClick: (Producto) -> Unit) {
             modifier = Modifier.padding(12.dp)
         ) {
             Image(
-                painter = painterResource(id = producto.imagen),
+                painter = painterResource(id = imagenIdToDrawableRes(producto.imagenId)),
                 contentDescription = producto.nombre,
                 modifier = Modifier
                     .size(90.dp)
