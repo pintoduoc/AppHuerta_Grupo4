@@ -4,7 +4,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitClient {
-    private const val BASE_URL = "http://10.0.2.2:8080/" // IP de tu PC (no uses localhost en Android)
+    private const val BASE_URL = "http://ec2-54-242-70-7.compute-1.amazonaws.com:8080/" // IP de la API, desplegada en AWS
 
     val instance: ApiService by lazy {
         Retrofit.Builder()
