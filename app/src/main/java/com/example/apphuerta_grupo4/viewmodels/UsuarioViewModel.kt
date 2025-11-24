@@ -10,6 +10,10 @@ import com.example.apphuerta_grupo4.model.UsuarioUiState
 
 
 class UsuarioViewModel : ViewModel() {
+    companion object {
+        // Expresión regular básica para validar correos electrónicos (usuario@dominio.tld)
+        private val EMAIL_REGEX = Regex("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$")
+    }
     private val _estado = MutableStateFlow(UsuarioUiState())
 
     val estado: StateFlow<UsuarioUiState> = _estado
@@ -45,7 +49,8 @@ class UsuarioViewModel : ViewModel() {
         val errores = UsuarioErrores(
             nombres = if (estadoActual.nombres.isBlank()) "Campo obligatorio" else null,
             apellidos = if (estadoActual.apellidos.isBlank()) "Campo obligatorio" else null,
-            correo = if (!estadoActual.correo.contains("@")) "Correo Invalido" else null,
+            // Reemplazamos contains("@") por la validación con expresión regular
+            correo = if (!EMAIL_REGEX.matches(estadoActual.correo)) "Correo Invalido" else null,
             clave = if (estadoActual.clave.length < 6) "Debe contener al menos 6 caracteres" else null,
             direccion = if (estadoActual.direccion.isBlank()) "Campo obligatorio" else null
             )
