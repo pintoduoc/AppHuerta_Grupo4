@@ -1,4 +1,3 @@
-
 package com.example.apphuerta_grupo4.ui.shared
 
 import androidx.compose.foundation.layout.PaddingValues
@@ -9,6 +8,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import com.example.apphuerta_grupo4.navigation.Screen
 import com.example.apphuerta_grupo4.viewmodels.MainViewModel
@@ -78,9 +78,12 @@ fun AppScaffold(
                 TopAppBar(
                     title = { Text(text = "Tienda Huerto Hogar") },
                     navigationIcon = {
-                        IconButton(onClick = {
-                            scope.launch { drawerState.open() }
-                        }) {
+                        IconButton(
+                            onClick = {
+                                scope.launch { drawerState.open() }
+                            },
+                            modifier = Modifier.testTag("boton_menu")
+                        ) {
                             Icon(imageVector = Icons.Default.Menu, contentDescription = "Menú")
                         }
                     }

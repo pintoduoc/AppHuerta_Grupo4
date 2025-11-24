@@ -1,4 +1,3 @@
-
 package com.example.apphuerta_grupo4.ui.screens
 
 import androidx.compose.foundation.layout.*
@@ -8,11 +7,14 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import com.example.apphuerta_grupo4.navigation.Screen
 import com.example.apphuerta_grupo4.ui.shared.AppScaffold
 import com.example.apphuerta_grupo4.viewmodels.MainViewModel
 import com.example.apphuerta_grupo4.viewmodels.UsuarioViewModel
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -30,7 +32,9 @@ fun PaginaRegistro(
             Modifier
                 .padding(innerPadding)
                 .fillMaxSize()
-                .padding(16.dp),
+                .padding(16.dp)
+                .verticalScroll(rememberScrollState())
+                .testTag("registro_contenedor"),
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             if (!estado.aceptaTerminos) {
@@ -43,10 +47,10 @@ fun PaginaRegistro(
                     isError = estado.errores.nombres != null,
                     supportingText = {
                         estado.errores.nombres?.let {
-                            Text(it, color = MaterialTheme.colorScheme.error)
+                            Text(it, color = MaterialTheme.colorScheme.error, modifier = Modifier.testTag("error_nombres"))
                         }
                     },
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth().testTag("campo_nombres")
                 )
 
                 //Campo Apellidos
@@ -57,10 +61,10 @@ fun PaginaRegistro(
                     isError = estado.errores.apellidos != null,
                     supportingText = {
                         estado.errores.apellidos?.let {
-                            Text(it, color = MaterialTheme.colorScheme.error)
+                            Text(it, color = MaterialTheme.colorScheme.error, modifier = Modifier.testTag("error_apellidos"))
                         }
                     },
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth().testTag("campo_apellidos")
                 )
 
                 //Campo correo
@@ -71,10 +75,10 @@ fun PaginaRegistro(
                     isError = estado.errores.correo != null,
                     supportingText = {
                         estado.errores.correo?.let {
-                            Text(it, color = MaterialTheme.colorScheme.error)
+                            Text(it, color = MaterialTheme.colorScheme.error, modifier = Modifier.testTag("error_correo"))
                         }
                     },
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth().testTag("campo_correo")
                 )
 
                 //Campo clave
@@ -85,10 +89,10 @@ fun PaginaRegistro(
                     isError = estado.errores.clave != null,
                     supportingText = {
                         estado.errores.clave?.let {
-                            Text(it, color = MaterialTheme.colorScheme.error)
+                            Text(it, color = MaterialTheme.colorScheme.error, modifier = Modifier.testTag("error_clave"))
                         }
                     },
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth().testTag("campo_clave")
                 )
 
                 //Campo Direccion
@@ -99,10 +103,10 @@ fun PaginaRegistro(
                     isError = estado.errores.direccion != null,
                     supportingText = {
                         estado.errores.direccion?.let {
-                            Text(it, color = MaterialTheme.colorScheme.error)
+                            Text(it, color = MaterialTheme.colorScheme.error, modifier = Modifier.testTag("error_direccion"))
                         }
                     },
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth().testTag("campo_direccion")
                 )
                 //Boton Enviar y aceptar terminos
                 Button(
@@ -112,12 +116,18 @@ fun PaginaRegistro(
                             viewModel.navigateTo(Screen.ResumenCuenta)
                         }
                     },
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth().testTag("boton_registrar")
                 ) {
                     Text("Aceptar terminos e condiciones y registrar cuenta")
                 }
             }else {
-                Text(text = "Ya has sido registrado", style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.error, modifier = Modifier.align(Alignment.CenterHorizontally) .padding(innerPadding))
+                Text(
+                    text = "Ya has sido registrado",
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = MaterialTheme.colorScheme.error,
+                    modifier = Modifier.align(Alignment.CenterHorizontally).testTag("mensaje_registrado")
+                        .padding(innerPadding)
+                )
             }
         }
     }
